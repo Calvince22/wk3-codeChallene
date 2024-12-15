@@ -1,25 +1,3 @@
-//const form = document.querySelector("form")
-//const movieList = document.querySelector("movie-list")
-//
-//form.addEventListener("submit",function(e){
-//    e.preventDefault()
-//    console.log(e.target)
-//    const li = document.createElement("li")
-//    fetch('http://localhost:3000/films')
-//    .then(res => res.json())
-//    .then(data => {
-//        li.innerHTML = `
-//        <img src= `` alt="image-1">
-//        <h2>`${data.title}`</h2>
-//        <p><span> `${data.runtime} ${data.capacity} ${data.showtime}`</span></p>
-//        <p>`${data.description}`</p>
-//        `
-//    })
-//
-//  
-//    movieList.appendChild("li")
-//
-//})
 const filmsList = document.querySelector("#films");
 const title = document.getElementById("title");
 const poster = document.getElementById("poster");
@@ -27,6 +5,7 @@ const runtime = document.getElementById("runtime");
 const showtime = document.getElementById("showtime");
 const tickets = document.getElementById("tickets");
 const buyTicket = document.getElementById("buy");
+const searchInput = document.querySelector('#search');
 
 let currentFilmTickets = 0;
 
@@ -49,19 +28,53 @@ fetch('http://localhost:3000/films')
       });
       filmsList.appendChild(li);
     });
+    fetchFilmById(1); // Display the first film by default
   })
   .catch(error => {
     console.error("Error fetching list:", error);
   });
 
+// Fetch film by ID
+function fetchFilmById(id) {
+  fetch(`http://localhost:3000/films/${id}`)
+    .then(res => res.json())
+    .then(film => {
+      showFilmDetails(film);
+    })
+    .catch(error => {
+      console.error("Error fetching film:", error);
+    });
+}
+
+// Search for movies
+function searchItem() {
+  const inputValue = searchInput.value.toLowerCase(); // Get input and convert to lowercase
+  const allMovies = document.querySelectorAll("#films li"); // Get all movie list items
+
+  allMovies.forEach(movie => {
+    const movieTitle = movie.querySelector("h3").textContent.toLowerCase(); // Get movie title and convert to lowercase
+    if (movieTitle.includes(inputValue)) {
+      movie.style.display = ""; // Show the movie if it matches
+    } else {
+      movie.style.display = "none"; // Hide the movie if it doesn't match
+    }
+  });
+}
+
+// Attach search function to input's `input` event
+searchInput.addEventListener("input", searchItem);
+
 // Display selected film details
 function showFilmDetails(film) {
   title.textContent = film.title;
   poster.src = film.poster;
-  runtime.textContent = film.runtime;
+  runtime.textContent = `${film.runtime} mins`;
   showtime.textContent = film.showtime;
   currentFilmTickets = film.capacity - film.tickets_sold;
   tickets.textContent = currentFilmTickets;
+
+  // Disable buy button if no tickets are available
+  buyTicket.disabled = currentFilmTickets === 0;
 }
 
 // Handle ticket purchase
@@ -72,6 +85,7 @@ buyTicket.addEventListener("click", () => {
 
     if (currentFilmTickets === 0) {
       alert("This showing is sold out!");
+      buyTicket.disabled = true; // Disable button if sold out
     }
   } else {
     alert("Sorry, no tickets available!");
