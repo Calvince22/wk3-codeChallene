@@ -1,0 +1,102 @@
+nav {
+    background-color: #2c3e50;
+    padding: 5px;
+    text-align: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    color: white;
+}
+
+/* General Styles */
+body, html {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    overflow-y: hidden;
+}
+
+/* Flex Container */
+.container {
+    display: flex;
+    height: 100vh; /* Full viewport height */
+}
+
+/* Sidebar Styles */
+.sidebar {
+    width: 25%;
+    background-color: #2c3e50;
+    color: white;
+    padding: 20px;
+    overflow-y: auto; /* Enables scrolling if content exceeds height */
+}
+
+.sidebar h2 {
+    margin-top: 0;
+    text-align: center;
+}
+
+/* Card Styles */
+.card {
+    background-color: #34495e; /* Slightly lighter than sidebar */
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    text-decoration: none;
+}
+
+.card img {
+    width: 100%;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.card h3 {
+    margin: 0 0 10px 0;
+    font-size: 18px;
+}
+
+.card p {
+    font-size: 14px;
+    color: #bdc3c7;
+}
+
+/* Content Area Styles */
+.content {
+    width: 75%; /* Content area takes up the remaining 75% */
+    background-color: #ecf0f1;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.content h1 {
+    margin-top: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+      flex-direction: column; /* Stack sidebar and content on smaller screens */
+    }
+
+    .sidebar {
+      width: 100%;
+    }
+
+    .content {
+      width: 100%;
+    }
+}
+
+footer {
+    text-align: center;
+    background-color: #2c3e50;
+    color: white;
+    flex-shrink: 0;
+    padding: 5px;
+}
