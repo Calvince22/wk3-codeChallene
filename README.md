@@ -21,7 +21,6 @@ This project is a simple movie theatre web application that allows users to brow
 
 ### Prerequisites
 - A modern web browser (e.g., Chrome, Firefox, Edge).
-- A local server to serve the JSON data, such as [json-server](https://github.com/typicode/json-server).
 
 ### Setup Steps
 
